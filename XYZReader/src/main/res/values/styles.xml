@@ -16,9 +16,11 @@
 -->
 
 <resources>
-
-    <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
-
+    <!-- the parent attribute let me inherit attributes from that style and be able to change them -->
+    <style name="Theme.Bacon" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lime_500</item>
+        <item name="colorPrimaryDark">@color/lime_700</item>
+        <item name="colorAccent">@color/purple_a400</item>
     </style>
 
     <style name="Theme.Bacon.Detail">
