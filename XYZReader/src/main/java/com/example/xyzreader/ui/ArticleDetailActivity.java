@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
@@ -54,7 +57,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
-        setupWindowAnimations();
 
         getLoaderManager().initLoader(0, null, this);
 
@@ -112,16 +114,6 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
                 mSelectedItemId = mStartId;
             }
-        }
-    }
-
-    /**
-     * load the enter transition animation from specified xml file
-     */
-    private void setupWindowAnimations() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.article_detail_enter);
-            getWindow().setEnterTransition(transition);
         }
     }
 
