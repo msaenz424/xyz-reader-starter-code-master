@@ -310,7 +310,9 @@ public class ArticleDetailFragment extends Fragment implements
 
         bindViews();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setTransitionName(mPhotoView, mCursor.getString(ArticleLoader.Query.TITLE));
+            if (mCursor != null){
+                ViewCompat.setTransitionName(mPhotoView, mCursor.getString(ArticleLoader.Query.TITLE));
+            }
             scheduleStartPostponedTransition(mPhotoView);
         }
     }
