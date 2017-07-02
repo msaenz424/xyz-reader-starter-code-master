@@ -8,12 +8,10 @@ import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.transition.TransitionManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
+import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.TypedValue;
 import android.view.View;
@@ -51,6 +49,11 @@ public class ArticleDetailActivity extends AppCompatActivity
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
         setContentView(R.layout.activity_article_detail);
+
+        // delays transition until views are drawn due to network lag. This ensures the animation.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
         setupWindowAnimations();
 
         getLoaderManager().initLoader(0, null, this);
@@ -117,8 +120,8 @@ public class ArticleDetailActivity extends AppCompatActivity
      */
     private void setupWindowAnimations() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.article_detail_enter);
-            getWindow().setEnterTransition(slide);
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.article_detail_enter);
+            getWindow().setEnterTransition(transition);
         }
     }
 
