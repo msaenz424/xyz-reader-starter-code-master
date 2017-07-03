@@ -22,7 +22,13 @@
     <color name="theme_primary_dark">#1B5E20</color> <!-- green_900 -->
     <color name="theme_accent">#FF3D00</color> <!-- deep_orange_a400 -->
     <color name="window_background">#C8E6C9</color> <!-- green_100 -->
+
     <color name="text_color_primary">#FFFFFF</color>
+    <color name="text_heading_title">#FFFFFF</color>
+    <color name="text_heading_byline">#8fff</color>
+    <color name="text_article_body">#000000</color>
+    <color name="text_title_item">#000000</color>
+    <color name="text_subtitle_item">#525252</color>
 
     <color name="ltgray">#ffe0e0e0</color>
 

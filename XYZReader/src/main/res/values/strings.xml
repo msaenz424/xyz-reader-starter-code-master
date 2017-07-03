@@ -8,5 +8,9 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
+    <string name="roboto_bold_italic">Roboto-BoldItalic.ttf</string>
+    <string name="roboto_light_italic">Roboto-LightItalic.ttf</string>
+    <string name="roboto_medium_italic">Roboto-MediumItalic.ttf</string>
+    <string name="roboto_regular">Roboto-Regular.ttf</string>
 
 </resources>

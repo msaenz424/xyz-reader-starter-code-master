@@ -214,7 +214,9 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         final TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
+        titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), getResources().getString(R.string.roboto_bold_italic)));
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+        bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), getResources().getString(R.string.roboto_light_italic)));
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
@@ -232,7 +234,7 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), getResources().getString(R.string.roboto_regular)));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
