@@ -1,25 +1,25 @@
 package com.example.xyzreader.ui;
 
+import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.Loader;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.view.animation.DecelerateInterpolator;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -42,6 +42,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
     private View mUpButton;
+    private AppBarLayout mAppBarLayout;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,41 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
                 mSelectedItemId = mStartId;
             }
+        }
+    }
+
+    @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar_detail);
+
+        int scrollValue = getResources().getInteger(R.integer.detail_screen_regular_height_value);
+        int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        int appbarHeight = mAppBarLayout.getHeight();
+
+        // if height of AppBar if bigger than screen's height then the scrolling will be slightly more extended
+        if (appbarHeight >= screenHeight){
+            scrollValue = getResources().getInteger(R.integer.detail_screen_bigger_height_value);
+        }
+
+        // generates an up-scrolling animation (instructive motion) when activity just starts
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        final AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            ValueAnimator valueAnimator = ValueAnimator.ofInt();
+            valueAnimator.setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    behavior.setTopAndBottomOffset((Integer) animation.getAnimatedValue());
+                    mAppBarLayout.requestLayout();
+                }
+            });
+            valueAnimator.setIntValues(getResources()
+                    .getInteger(R.integer.detail_screen_zero_value), scrollValue);
+            valueAnimator.setDuration(getResources().getInteger(R.integer.detail_screen_duration));
+            valueAnimator.setStartDelay(getResources().getInteger(R.integer.detail_screen_delay));
+            valueAnimator.start();
         }
     }
 

@@ -28,12 +28,8 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
-import android.transition.ChangeBounds;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -167,6 +163,8 @@ public class ArticleDetailFragment extends Fragment implements
         //updateStatusBar();
         return mRootView;
     }
+
+
 
     private void updateStatusBar() {
         int color = 0;

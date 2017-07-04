@@ -16,5 +16,6 @@
     <dimen name="appbar_elevation">4dp</dimen>
     <dimen name="horizontal_list_inner_padding">16dp</dimen>
     <dimen name="vertical_list_inner_padding">8dp</dimen>
+    <dimen name="init_scroll_up_distance">150dp</dimen>
 
 </resources>
