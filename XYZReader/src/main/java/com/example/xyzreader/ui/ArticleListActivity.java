@@ -10,16 +10,19 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -28,6 +31,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -60,7 +64,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
 
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private CoordinatorLayout mCoordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout_main);
 
         //final View toolbarContainerView = findViewById(R.id.toolbar_container);
 
@@ -97,6 +101,17 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //if there is not internet connection, displays an error message
+        if (!isOnline(this)){
+            Snackbar snackbar = Snackbar
+                    .make(mCoordinatorLayout, getResources().getString(R.string.no_internet_connection_message), Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
@@ -116,6 +131,17 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+    }
+
+    /**
+     * Checks if there is Internet connection
+     *
+     * @return true if there is connection; false if there isn't
+     */
+    public static boolean isOnline(Activity activity) {
+        ConnectivityManager cm = (ConnectivityManager)  activity.getSystemService(activity.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override

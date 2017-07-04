@@ -13,4 +13,5 @@
     <string name="roboto_medium_italic">Roboto-MediumItalic.ttf</string>
     <string name="roboto_regular">Roboto-Regular.ttf</string>
 
+    <string name="no_internet_connection_message">No internet connection</string>
 </resources>

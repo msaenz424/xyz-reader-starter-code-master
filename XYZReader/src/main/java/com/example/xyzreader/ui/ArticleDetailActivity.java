@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import android.view.animation.DecelerateInterpolator;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
+
+import static com.example.xyzreader.ui.ArticleListActivity.isOnline;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
@@ -42,7 +45,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
     private View mUpButton;
-    private AppBarLayout mAppBarLayout;;
+    private AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +153,21 @@ public class ArticleDetailActivity extends AppCompatActivity
             valueAnimator.setDuration(getResources().getInteger(R.integer.detail_screen_duration));
             valueAnimator.setStartDelay(getResources().getInteger(R.integer.detail_screen_delay));
             valueAnimator.start();
+        }
+        checkIfOnline();
+    }
+
+    /**
+     * Displays an error message if there is not internet connection
+     */
+    private void checkIfOnline(){
+        if (!isOnline(this)){
+            Snackbar snackbar = Snackbar
+                    .make(getWindow().getDecorView().findViewById(
+                            R.id.coordinator_layout_detail),
+                            getResources().getString(R.string.no_internet_connection_message),
+                            Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
     }
 
